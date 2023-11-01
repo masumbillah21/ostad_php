@@ -1,31 +1,48 @@
-# Assignment 03
+# Live Test 03
 
-## Task 1: String Manipulation
+## Task 1:
 
+Create an associative array called $student with the following key-value pairs:
 
-Create a string variable called $text with the value "The quick brown fox jumps over the lazy dog.". Write a PHP function which takes "$text" as an argument to:
+'name' => 'Alice', 'age' => 22, 'grade' => 'A'
 
-Convert the string to all lowercase.
-Replace "brown" with "red" in the string.
-Print the modified text.
-
-
-## Task 2: Array Manipulation
-
-Create an array called $numbers containing the numbers 1 to 10. Write a PHP function which takes the "$numbers" array as an argument to remove the even numbers from the array and print the resulting array.
-
-## Task 3: Array Sorting  
+Print the age of the student.
 
 
-Create an array called $grades with the following values: 85, 92, 78, 88, 95. Write a PHP function which takes "$grades" as an argument to sort the array in descending order and print the sorted grades as array.
 
 
-## Task 4: Multidimensional Array
+## Task 2:
 
-Create a multidimensional array called $studentGrades to store the grades of three students. Each student has grades for three subjects: Math, English, and Science. Write a PHP function which takes "$studentGrades" as an argument to calculate and print the average grade for each student.
+Create an associative array called $student with the key-value pairs:
 
-## Task 5: Password Generator
+'name' => 'Alice', 'age' => 22, 'grade' => 'A'
 
+Check if the 'grade' key exists in the array using array_key_exists() and print the result.
 
-Create a PHP function called generatePassword($length) that generates a random password of the specified length. The password should include lowercase letters, uppercase letters, numbers, and special characters (!@#$%^&*()_+). Write a PHP program to generate a password with a length of 12 characters using this function and print the password.
+ 
 
+## Task 3:
+
+Create an array called $numbers with values 100, 200, 50, 40, 50.
+
+Use a foreach loop to print each value in the array.
+
+ 
+
+## Task 4:
+
+Create an array called $names with values 'Talha', 'Afnan', 'Mashrufa', 'Zia', 'Iqbal', 'Habib', 'Airin', ‘Moni’.
+
+Use the array_filter() function to filter names that start with the letter 'M'.
+
+Print the filtered names.
+
+ 
+
+## Task 5:
+
+Create a string variable $originalString with the value 'Hello, World!'.
+
+Use the strrev() function to reverse the string.
+
+Print the reversed string.
