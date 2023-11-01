@@ -1,48 +1,23 @@
-# Live Test 03
+# Assignment 05
 
-## Task 1:
-
-Create an associative array called $student with the following key-value pairs:
-
-'name' => 'Alice', 'age' => 22, 'grade' => 'A'
-
-Print the age of the student.
+You are working on a project to create an online shopping cart system. As part of the project, you need to implement a Product class that represents a product in the system. The Product class should have the following properties:
 
 
+- id (integer type): the unique identifier of the product
+- name (string type): the name of the product
+- price (float type): the price of the product
 
 
-## Task 2:
+In addition to the properties, the Product class should also have the following methods:
 
-Create an associative array called $student with the key-value pairs:
 
-'name' => 'Alice', 'age' => 22, 'grade' => 'A'
+1. __construct: a constructor method that takes the id, name, and price as parameters and initializes the corresponding properties of the object.
 
-Check if the 'grade' key exists in the array using array_key_exists() and print the result.
 
- 
+2. getFormattedPrice: a method that returns the price of the product formatted as a string with two decimal places.
 
-## Task 3:
 
-Create an array called $numbers with values 100, 200, 50, 40, 50.
+3. showDetails: a method that prints the details of the product (id, name, and formatted price) to the console.
 
-Use a foreach loop to print each value in the array.
 
- 
-
-## Task 4:
-
-Create an array called $names with values 'Talha', 'Afnan', 'Mashrufa', 'Zia', 'Iqbal', 'Habib', 'Airin', ‘Moni’.
-
-Use the array_filter() function to filter names that start with the letter 'M'.
-
-Print the filtered names.
-
- 
-
-## Task 5:
-
-Create a string variable $originalString with the value 'Hello, World!'.
-
-Use the strrev() function to reverse the string.
-
-Print the reversed string.
+Your task is to write the implementation of the Product class in PHP. Use the provided template code below and fill in the missing parts:
