@@ -2,7 +2,6 @@
 
 User Authentication and Role Management System
 
-
 ## User Logins
 
 ### For Admin
