@@ -29,42 +29,58 @@ class Helper{
 
     public function validateUsername(string $username): array
     {
-        if (!preg_match("/^[a-zA-Z-' ]*$/",$username)) {
-            return array('status' => false,'message'=> 'Only letters and white space allowed ');
+        if(!empty(trim($username)) && trim($username) != null){
+
+            if (!preg_match("/^[a-zA-Z-' ]*$/",$username)) {
+                return array('status' => false,'message'=> 'Only letters and white space allowed ');
+            }else{
+                return array('status' => true, 'message'=> htmlspecialchars(trim($username)));
+            }
         }else{
-            return array('status' => true, 'message'=> $username);
+            return array('status' => false, 'message'=> "Username is empty.");
         }
+        
     }
 
     public function validateEmail(string $email): array
     {
-        $users = $this->getDataFromJsonFile();
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return array("status" => false, "message"=> "Invalid email format");
-        }elseif(isset($users[$email])){
-            return array("status" => false, "message"=> "Email Already Exist.");
+        if(!empty(trim($email)) && trim($email) != null){
+            $users = $this->getDataFromJsonFile();
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return array("status" => false, "message"=> "Invalid email format");
+            }elseif(isset($users[$email])){
+                return array("status" => false, "message"=> "Email Already Exist.");
+            }
+            else{
+                return array("status" => true, "message"=> htmlspecialchars(trim($email)));
+            }
+        }else{
+            return array('status' => false, 'message'=> "Email is empty.");
         }
-        else{
-            return array("status" => true, "message"=> $email);
-        }
+        
     }
 
     public function validatePassword(string $password): array
     {
-        if (strlen(trim($password)) < 8) {
-            return array("status"=> false,"message"=> "Your Password Must Contain At Least 8 Characters!");
+        if(!empty(trim($password)) && trim($password) != null){
+            if (strlen(trim($password)) < 8) {
+                return array("status"=> false,"message"=> "Your Password Must Contain At Least 8 Characters!");
+            }
+            else if(!preg_match("#[0-9]+#", $password)) {
+                return array("status"=> false,"message"=> "Your Password Must Contain At Least 1 Number!");
+            }
+            else if(!preg_match("#[A-Z]+#", $password)) {
+                return array("status"=> false,"message"=> "Your Password Must Contain At Least 1 Capital Letter!");
+            }
+            else if(!preg_match("#[a-z]+#", $password)) {
+                return array("status"=> false,"message"=> "Your Password Must Contain At Least 1 Lowercase Letter!");
+            } else{
+                return array("status" => true,"message"=> htmlspecialchars(trim($password)));
+            }
+        }else{
+            return array('status' => false, 'message'=> "Password is empty.");
         }
-        else if(!preg_match("#[0-9]+#", $password)) {
-            return array("status"=> false,"message"=> "Your Password Must Contain At Least 1 Number!");
-        }
-        else if(!preg_match("#[A-Z]+#", $password)) {
-            return array("status"=> false,"message"=> "Your Password Must Contain At Least 1 Capital Letter!");
-        }
-        else if(!preg_match("#[a-z]+#", $password)) {
-            return array("status"=> false,"message"=> "Your Password Must Contain At Least 1 Lowercase Letter!");
-        } else{
-            return array("status" => true,"message"=> $password);
-        }
+        
     }
 
     public function signUp($username, $email, $password): array{
@@ -100,8 +116,18 @@ class Helper{
     public function getSingleUserData($email):array
     {
         $users = $this->getDataFromJsonFile();
+        $userData = [];
+        if (isset($users[$email])) {
+            $userData = [
+                'username' => $users[$email]['username'],
+                'role' => $users[$email]['role'],
+            ];
+        }else{
+            $userData = [];
+        }
 
-        return  $users[$email];
+        
+        return  $userData;
     }
 
     public function verifyLogin($email, $password): array{
@@ -132,7 +158,7 @@ class Helper{
                     'role' => $role,
                 ];
                 $this->addData($users);
-                return array('status'=> true,'message'=> "Successfully Signed Up.");
+                return array('status'=> true,'message'=> "New User Successfully Added.");
             }else{
                 return array('status'=> false,'message'=> "You don't have permission to do this action.");
             }
@@ -143,15 +169,21 @@ class Helper{
         
     }
 
-    public function updateUser($author, $email, $username, $password, $role): array{
-        if (!empty($author) && !empty($email) && !empty($username) && !empty($password) && !empty($role)) {
+    public function updateUser($author, $email, $username,  $password, $role): array{
+        if (!empty($author) && !empty($email) && !empty($username)) {
             if($this->isAdmin($author)){
                 $users = $this->getDataFromJsonFile();
-                $users[$email]['username'] = $username;
-                $users[$email]['password'] = password_hash($password, PASSWORD_DEFAULT);
-                $users[$email]['role'] = $role;
-                $this->addData($users);
-                return array('status'=> true,'message'=> "User Successfully Updated.");
+                if (isset($users[$email])) {
+                    $users[$email]['username'] = $username;
+                    if(!empty($password)){
+                        $users[$email]['password'] = password_hash($password, PASSWORD_DEFAULT);
+                    }
+                    $users[$email]['role'] = $role;
+                    $this->addData($users);
+                    return array('status'=> true,'message'=> "User Successfully Updated.");
+                }else{
+                    return array('status'=> false,'message'=> "Invalid Request");
+                }
             }else{
                 return array('status'=> false,'message'=> "You don't have permission to do this action.");
             }

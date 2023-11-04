@@ -15,27 +15,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $email = "";
     $password = "";
 
-    if (isset($_POST['user_email']) 
-    && !empty(trim($_POST['user_email'])) 
-    && trim($_POST['user_email']) != null) {
-        $res = $helper->validateEmail($_POST['user_email']);
-        if ($res['status']) {
-            $email = htmlspecialchars(trim($_POST['user_email']));
-        }else{
-            $errEmail = $res['message'];
-            $err++;
-        }
-    }else{
-        $errEmail = "Email is empty.";
-        $err++;
-    }
-
-    if (isset($_POST['user_name']) 
-        && !empty(trim($_POST['user_name'])) 
-        && trim($_POST['user_name']) != null) {
-            $res = $helper->validateUsername($_POST['user_name']);
+    if (isset($_POST['user_name'])) {
+        $res = $helper->validateUsername($_POST['user_name']);
             if ($res['status']) {
-                $username = htmlspecialchars(trim($_POST['user_name']));
+                $username = $res['message'];
             }else{
                 $errUser = $res['message'];
                 $err++;
@@ -45,15 +28,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $err++;
     }
 
-   
+    if (isset($_POST['user_email'])) {
+        $res = $helper->validateEmail($_POST['user_email']);
+        if ($res['status']) {
+            $email = $res['message'];
+        }else{
+            $errEmail = $res['message'];
+            $err++;
+        }
+    }else{
+        $errEmail = "Email is empty.";
+        $err++;
+    }
 
-    if (isset($_POST['user_password']) 
-        && !empty(trim($_POST['user_password'])) 
-        && trim($_POST['user_password']) != null) {
+    if (isset($_POST['user_password'])) {
             $res = $helper->validatePassword($_POST['user_password']);
 
             if ($res['status']) {
-                $password = htmlspecialchars(trim($_POST['user_password']));
+                $password = $res['message'];
             }else{
                 $errPassword = $res['message'];
                 $err++;
@@ -108,6 +100,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <div class="mb-3">
                                 <label for="user-password" class="form-label">Password</label>
                                 <input type="password" class="form-control" name="user_password" id="user-password" required>
+                                <p class="mt-1">Password must be at least 8 characters & Password should contain upper letter, lower letter, number & special character.</p>
                                 <p class="text-danger"><?php echo $errPassword; ?></p>
                             </div>
                         </div>

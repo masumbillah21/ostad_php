@@ -29,7 +29,6 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="index-user.php">Batch 2</a>
-                
                 <span class="navbar-text">
                     <strong>Hi, <?php echo ucfirst($username); ?></strong>
                     <a href="./logout.php" class="btn btn-danger text-white">Logout</a>

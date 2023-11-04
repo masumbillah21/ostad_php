@@ -43,7 +43,7 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Role Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -52,7 +52,7 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
     <header class="header">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="#">Batch 2</a>
+                <a class="navbar-brand" href="./index.php">Batch 2</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -74,7 +74,7 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <a href="./edit.php" class="btn btn-primary my-2">Add New</a>
+                    <a href="./edit.php" class="btn btn-primary my-2">Add New User</a>
                 </div>
                 <div class="col-lg-12">
                     <?php echo $msg; ?>
@@ -106,15 +106,14 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
                                             <td><?php echo $username; ?></td>
                                             <td><?php echo $email; ?></td>
                                             <td><?php echo $role; ?></td>
-                                            <td>
+                                            <td width="200">
+                                                <a href="./edit.php?email=<?php echo $email; ?>" class="btn btn-info text-white">Edit</a>
                                                 <?php
                                                     if ($email != $loggedInEmail) {
-                                                        echo "<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#user-$count'>
-                                                        Edit
-                                                    </button>
-                                                    <button type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#role-del-$count'>
-                                                        Delete
-                                                    </button>";
+                                                        echo "
+                                                        <button type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#role-del-$count'>
+                                                            Delete
+                                                        </button>";
                                                     }
                                                 ?>
                                           </td>
@@ -128,7 +127,7 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
                                                     <form action="" method="POST">
                                                         <!-- Modal Header -->
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title"><?php echo $email; ?></h4>
+                                                            <h4 class="modal-title">Warning</h4>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
 
@@ -136,7 +135,7 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
                                                         <div class="modal-body">
                                                             <div class="mb-3">
                                                                 <input type="hidden" name="user_email" value="<?php echo $email; ?>">
-                                                                <p class="text-danger text-bold">Do you want to delete role?</p>
+                                                                <p class="text-danger font-weight-bold">Do you want to delete user: <?php echo $email; ?>?</p>
                                                             </div>
                                                         </div>
 

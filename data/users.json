@@ -1,22 +1,22 @@
 {
     "admin@email.com": {
         "username": "Admin",
-        "password": "$2y$10$16HWxdcFbMA14mEGblrqRO1hI4\/6AcBCRujw1FwRosSmx1pOF7JNa",
+        "password": "$2y$10$lFkOWFz\/47bMzsm14.RUoeA0iYt\/RXhQeHKyABZvZVrIUkJdijLfW",
         "role": "admin"
     },
     "manager@email.com": {
         "username": "Manager",
-        "password": "$2y$10$9sXlXUS8O.uzfaegL8xeAue3ab78j\/evS5qjsvHTKDf6vYv7QBvKq",
+        "password": "$2y$10$RJBbtL6W1dsrYDcWPhScv.BO0thCcs5vtEhj543zUe8KpQqHQ40ZK",
         "role": "manager"
     },
     "user@email.com": {
         "username": "User",
-        "password": "$2y$10$Gz4yv8WPEIxuGB8KO1xD0uPbNeT2KUGdHrXAjqqFygVQd5CDgWjbK",
+        "password": "$2y$10$4PJENr4pDVwEiHPvS9YKher4gd1EIVAp4.o1wz2oLUI3ejqFEfVTq",
         "role": "user"
     },
     "guest@email.com": {
         "username": "Guest",
-        "password": "$2y$10$cbsEWhLo3lb5bCTQDsPzE.gVMT.ooGm46JgH04xIHCfV4W9bc72Ba",
+        "password": "$2y$10$y6b.390VbjyxyvUBCJ6mMO7ryB4lKhbyf\/CvMFqDcugayllYMC1HO",
         "role": ""
     }
 }
