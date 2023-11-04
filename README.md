@@ -20,6 +20,9 @@ password: $kunD5jiXi2s~+
 email: guest@email.com
 password: qV^NGV9P$_+q!QC
 
+
+NOTE: To Generate Secure Password You Can Use https://www.avast.com/random-password-generator
+
 ## Project Description
 
 Our Crew Project is a web application that requires user authentication and role management using PHP. The project has multiple user roles such as admin, manager, and user. Each role has different access permissions to various parts of the application. 
