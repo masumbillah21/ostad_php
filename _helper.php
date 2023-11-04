@@ -12,6 +12,10 @@ class Helper{
         return $users;
     }
 
+    private function addData($users){
+        file_put_contents($this->userFile, json_encode($users, JSON_PRETTY_PRINT));
+    }
+
     private function isAdmin(string $email): bool
     {
         $users = $this->getDataFromJsonFile();
@@ -63,7 +67,7 @@ class Helper{
         }
     }
 
-    public function saveUsers($username, $email, $password): array{
+    public function signUp($username, $email, $password): array{
         if (!empty($username) && !empty($email) && !empty($password)) {
             $users = $this->getDataFromJsonFile();
             $users[$email] = [
@@ -71,7 +75,7 @@ class Helper{
                 "password"=> password_hash($password, PASSWORD_DEFAULT),
                 'role' => '',
             ];
-            file_put_contents($this->userFile, json_encode($users, JSON_PRETTY_PRINT));
+            $this->addData($users);
             return array('status'=> true,'message'=> "Successfully Signed Up.");
         }else{
             return array('status'=> false,'message'=> "Something went wrong, Please try again later.");
@@ -93,8 +97,14 @@ class Helper{
         return $userData;
     }
 
-    public function verifyLogin($email, $password): array{
+    public function getSingleUserData($email):array
+    {
+        $users = $this->getDataFromJsonFile();
 
+        return  $users[$email];
+    }
+
+    public function verifyLogin($email, $password): array{
         if (!empty($email) && !empty($password)) {
             $users = $this->getDataFromJsonFile();
             if (isset($users[$email])) {
@@ -112,13 +122,36 @@ class Helper{
         }
     }
 
-    public function updateRole($author, $email, $role): array{
-        if (!empty($email) && !empty($role) && !empty($author)) {
+    public function createNewUser($author, $username, $email, $password, $role): array{
+        if (!empty($author) && !empty($username) && !empty($email) && !empty($password)) {
+            if ($this->isAdmin($author)) {
+                $users = $this->getDataFromJsonFile();
+                $users[$email] = [
+                    "username"=> $username,
+                    "password"=> password_hash($password, PASSWORD_DEFAULT),
+                    'role' => $role,
+                ];
+                $this->addData($users);
+                return array('status'=> true,'message'=> "Successfully Signed Up.");
+            }else{
+                return array('status'=> false,'message'=> "You don't have permission to do this action.");
+            }
+            
+        }else{
+            return array('status'=> false,'message'=> "Something went wrong, Please try again later.");
+        }
+        
+    }
+
+    public function updateUser($author, $email, $username, $password, $role): array{
+        if (!empty($author) && !empty($email) && !empty($username) && !empty($password) && !empty($role)) {
             if($this->isAdmin($author)){
                 $users = $this->getDataFromJsonFile();
+                $users[$email]['username'] = $username;
+                $users[$email]['password'] = password_hash($password, PASSWORD_DEFAULT);
                 $users[$email]['role'] = $role;
-                file_put_contents($this->userFile, json_encode($users, JSON_PRETTY_PRINT));
-                return array('status'=> true,'message'=> "Role Successfully Updated.");
+                $this->addData($users);
+                return array('status'=> true,'message'=> "User Successfully Updated.");
             }else{
                 return array('status'=> false,'message'=> "You don't have permission to do this action.");
             }
@@ -126,13 +159,13 @@ class Helper{
             return array('status'=> false,'message'=> "Invalid Request");
         }
     }
-    public function deleteRole($author, $email): array{
+    public function deleteUser($author, $email): array{
         if (!empty($email) && !empty($author)) {
             if($this->isAdmin($author)){
                 $users = $this->getDataFromJsonFile();
-                $users[$email]['role'] = '';
+                unset($users[$email]);
                 file_put_contents($this->userFile, json_encode($users, JSON_PRETTY_PRINT));
-                return array('status'=> true,'message'=> "Role Successfully Deleted.");
+                return array('status'=> true,'message'=> "User Successfully Deleted.");
             }else{
                 return array('status'=> false,'message'=> "You don't have permission to do this action.");
             }

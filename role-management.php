@@ -20,18 +20,9 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
         $loggedInEmail = $_SESSION['email'];
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            if (isset($_POST['role_update'])) {
+            if(isset($_POST['role_del'])){
                 extract($_POST);
-                $res = $helper->updateRole($loggedInEmail, $user_email, $user_role);
-                $resMess = $res['message'];
-                if($res['status']){
-                    $msg = "<p class='text-success text-bold text-center'>$resMess</p>";
-                }else{
-                    $msg = "<p class='text-danger text-bold text-center'>$resMess</p>";
-                }
-            }else if(isset($_POST['role_del'])){
-                extract($_POST);
-                $res = $helper->deleteRole($loggedInEmail, $user_email);
+                $res = $helper->deleteUser($loggedInEmail, $user_email);
                 $resMess = $res['message'];
                 if($res['status']){
                     $msg = "<p class='text-success text-bold text-center'>$resMess</p>";
@@ -83,6 +74,9 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+                    <a href="./edit.php" class="btn btn-primary my-2">Add New</a>
+                </div>
+                <div class="col-lg-12">
                     <?php echo $msg; ?>
                     <div class="card">
                         <div class="card-header">
@@ -128,44 +122,6 @@ if (!isset($_SESSION['username']) && empty($_SESSION['username'])) {
                                         <?php
                                         if ($email != $loggedInEmail) {
                                             ?>
-                                            <div class="modal" id="user-<?php echo $count; ?>">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                    <form action="" method="POST">
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title"><?php echo $email; ?></h4>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
-
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            <div class="mb-3">
-                                                                <input type="hidden" name="user_email" value="<?php echo $email; ?>">
-                                                                <label for="user-role" class="form-label">User Role</label>
-                                                                <select class="form-control" id="user-role" name="user_role" required>
-                                                                    <option value="" disabled <?php if ($role == "")
-                                                                        echo "selected"; ?>>Select One</option>
-                                                                    <option value="admin" <?php if ($role == "Admin")
-                                                                        echo "selected"; ?>>Admin</option>
-                                                                    <option value="manager" <?php if ($role == "Manager")
-                                                                        echo "selected"; ?>>Manager</option>
-                                                                    <option value="user" <?php if ($role == "User")
-                                                                        echo "selected"; ?>>User</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-primary" name="role_update">Update</button>
-                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                             <div class="modal" id="role-del-<?php echo $count; ?>">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">

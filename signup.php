@@ -64,7 +64,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 
     if ($err == 0) {
-        $res = $helper->saveUsers($username, $email, $password);
+        $res = $helper->signUp($username, $email, $password);
         if($res['status']){
             $msg = '<p class="text-success text-center">'.$res['message'].'</p>';
         }else{
